@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Acceso Secreto</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background-color: #ffd6e7; /* Fondo rosado suave */
+      font-family: 'Segoe UI', sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #login-box {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      width: 90%;
+      max-width: 350px;
+    }
+
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 12px;
+      width: 100%;
+      background-color: #ec407a;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #error-msg {
+      color: red;
+      font-size: 14px;
+      margin-top: 10px;
+      display: none;
+    }
+
+    #main-content {
+      display: none;
+    }
+
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+    img {
+        animation: blink 1s infinite;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Pantalla de contraseña -->
+  <div id="login-box">
+    <img src="login-box.jpg" alt="Advertencia" style="width: 200px; margin-bottom: 10px;" />
+    <h2>CUIDADO</h2>
+    <p>Ingresa la clave secreta, maldito intruso</p>
+    <input type="password" id="password" placeholder="Contraseña..." />
+    <button onclick="checkPassword()">Entrar</button>
+    <p id="error-msg">Contraseña incorrecta. Inténtalo de nuevo.</p>
+  </div>
+
+  <!-- Contenido oculto por ahora -->
+  <div id="main-content">
+    <!-- Lo agregaremos después -->
+  </div>
+
+  <script>
+    function checkPassword() {
+      const claveCorrecta = "1407"; // <-- Cambia la contraseña aquí
+      const input = document.getElementById("password").value;
+      const error = document.getElementById("error-msg");
+
+      if (input === claveCorrecta) {
+        document.getElementById("login-box").style.display = "none";
+        document.getElementById("main-content").style.display = "block";
+      } else {
+        error.style.display = "block";
+      }
+    }
+  </script>
+
+</body>
+</html>
