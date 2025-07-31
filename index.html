@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Acceso Secreto</title>
+  <title>👀</title>
   <style>
     * {
       margin: 0;
@@ -11,31 +11,47 @@
       box-sizing: border-box;
     }
     body {
-      background-color: #ffd6e7; /* Fondo rosado suave */
+      background-color: #ffd6e7;
       font-family: 'Segoe UI', sans-serif;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
     }
 
     #login-box {
       background: white;
-      padding: 2rem;
+      padding: 2rem 1rem;
       border-radius: 12px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
       text-align: center;
-      width: 90%;
-      max-width: 350px;
+      width: 92vw;
+      max-width: 370px;
+      transition: opacity 0.6s ease, filter 0.6s ease;
+      position: relative;
+      z-index: 10;
+    }
+
+    #login-box img {
+      width: min(70vw, 200px);
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+    #login-box.disappear {
+      opacity: 0;
+      filter: blur(8px);
+      pointer-events: none;
     }
 
     input[type="password"] {
       width: 100%;
       padding: 12px;
-      font-size: 16px;
+      font-size: 1.1em;
       margin-top: 10px;
       border: 1px solid #ccc;
       border-radius: 8px;
+      box-sizing: border-box;
     }
 
     button {
@@ -44,7 +60,7 @@
       width: 100%;
       background-color: #ec407a;
       color: white;
-      font-size: 16px;
+      font-size: 1.1em;
       border: none;
       border-radius: 8px;
       cursor: pointer;
@@ -52,152 +68,155 @@
 
     #error-msg {
       color: red;
-      font-size: 14px;
+      font-size: 0.95em;
       margin-top: 10px;
       display: none;
     }
 
     #main-content {
+      position: absolute;
+      top: 6vh;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 97vw;
+      max-width: 80%;
+      background: #ffe6f0;
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      padding: 2.3rem 1.1rem 2rem 1.1rem;
+      box-sizing: border-box;
+      text-align: center;
       display: none;
+      opacity: 0;
+      transition: opacity 0.7s ease;
+      z-index: 20;
+      pointer-events: none;
+      min-height: 250px;
     }
-
-    @keyframes blink {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0; }
+    #main-content img {
+      width: min(80vw, 350px);
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
-    img {
-        animation: blink 1s infinite;
+    #main-content.show {
+      display: block;
+      opacity: 1;
+      pointer-events: auto;
     }
-
-    #main-content {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #000;
-      color: #fff;
-      display: none;
+    .center-login {
+      display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-      font-family: 'Courier New', monospace;
-      opacity: 0;
-      transition: opacity 2s ease-in-out;
-    }
-    
-    #main-content.show {
-      opacity: 1;
-    }
-    
-    .console-text {
-      font-size: 24px;
-      margin: 10px 0;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 1s ease, transform 1s ease;
-    }
-    
-    .console-text.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    
-    .cursor {
-      display: inline-block;
-      width: 10px;
-      height: 24px;
-      background-color: #fff;
-      animation: blink 0.7s infinite;
-      vertical-align: middle;
+      height: 100vh;
     }
 
+
+    /* MEDIA QUERIES PARA ADAPCIÓN A MÓVILES MÁS PEQUEÑOS */
+    @media (max-width: 500px) {
+      #login-box, #main-content {
+        max-width: 98vw;
+        padding-left: 0.55rem;
+        padding-right: 0.55rem;
+        font-size: 0.97em;
+      }
+      #login-box img {
+        width: 60%;
+        min-width: 120px;
+        max-width: 95vw;
+      }
+      #main-content img {
+        width: 80%;
+        min-width: 120px;
+        max-width: 95vw;
+      }
+    }
+    @media (max-width: 350px) {
+      #login-box,
+      #main-content {
+        padding-left: 0.2rem;
+        padding-right: 0.2rem;
+        font-size: 0.93em;
+      }
+      #login-box img, #main-content img {
+        width: 85vw;
+      }
+    }
   </style>
 </head>
-<body>
+<body class="center-login">
 
-  <!-- Pantalla de contraseña -->
   <div id="login-box">
-    <img src="login-box.jpg" alt="Advertencia" style="width: 200px; margin-bottom: 10px;" />
-    <h2>CUIDADO</h2>
+    <img src="login-box.jpg" alt="Advertencia" />
+    <h2>¡ALTO AHI, SOY EL DUKO!</h2>
     <p>Ingresa la clave secreta, maldito intruso</p>
     <input type="password" id="password" placeholder="Contraseña..." />
     <button onclick="checkPassword()">Entrar</button>
-    <p id="error-msg">Contraseña incorrecta. Inténtalo de nuevo.</p>
+    <p id="error-msg">ACCESO DENEGADO, NO TE DEJARE PASAR</p>
   </div>
 
   <div id="main-content">
-    <div id="console-messages">
-      <!-- Mensajes que aparecerán secuencialmente -->
-    </div>
+    <img src="acceso_aprobado.png" alt="Bienvenida" />
+    <h2>¡FELIZ CUMPLEAÑOS 21!</h2>
+  <div style="max-width: 500px; margin: 0 auto;">
+    <p>21 añitos, estas vieja jeje. La verdad es que no tenia pensado hacerte esta carta, porque tienes mas que sabido todo lo importante que eres para mi, pero ya sabes, soy de hacer estas ñoñerías.<br><br>
+      Que puedo decir, nunca pensé que durante la pandemia, estando en clases virtuales y sin saber que iba a suceder, iba a terminar conociéndote, siendo mi partner de trabajos (y que terminamos siéndolo hasta el final) y ya después cuando pudimos conocernos en el liceo, teniendo todos esos momentos que siguen siendo parte importante de mi y que recuerdo con tanto aprecio. Los recreos, las conversaciones, las estupideces que hacíamos, las risas y sobre todo, la amistad que fuimos armando en ese tiempo.
+    </p>
+    <img src="imagen_1.jpg" alt="Recuerdo juntos" style="width:100%; border-radius:12px; margin:18px 0;">
+    <p>
+      Siendo sincero, no se en que momento empezamos a convertirnos en mejores amigos, quizás fue espontaneo, no recuerdo, pero literal pasábamos todo el tiempo juntos, como uña y mugre jeje. Y realmente todo ese tiempo nos fue uniendo, algo impensado, sabiendo que no teníamos el mejor pensamiento el uno del otro antes de conocernos, pero entre toda la gente doble cara que había alrededor, que te demostraba amistad un día y te desconocían al otro, tu siempre estuviste ahí, sin importar nada, demostraste una lealtad que nunca vi en alguien y asi te ganaste mi cariño, mi protección y mi hermandad, porque si, tienes un hermano para toda la vida.
+    </p>
+    <img src="imagen_2.jpg" alt="Mejores amigos" style="width:100%; border-radius:12px; margin:18px 0;">
+    <p>
+      Nunca entendí porque había gente que le caías mal (ya sabes a quienes me refiero), siempre que estuve contigo, fuiste alguien con una sonrisa de oreja a oreja, que me escuchaba cada vez que te necesitaba, que demostrabas tener talento en todo, una chica inteligente y bellísima que lograbas opacar a cualquiera que estuviera a tu lado, las dejabas chicas a todas, incluidas a las que hablaban mal de ti. Siempre quisieron meterme en la cabeza tantas cosas malas de ti, pero aquí sigues demostrándome lo equivocadas que estaban todas esas personas, y sin importar lo que me digan, seguiré defendiéndote a capa y espada, porque jamás me arrepentiré de haberte dado la confianza de ser mi amiga y ser la única amistad que quiero hasta el final de mis días.
+    </p>
+    <img src="imagen_3.jpg" alt="Momentos únicos" style="width:100%; border-radius:12px; margin:18px 0;">
+    <p>
+      Ese día es de mis favoritos, ya nos quedaba super poquito y teníamos que sacarnos la foto del cuadro, y no se nos ocurrió mejor idea que cambiar tu falda por mi pantalón, MI MACHO INTERIOR DESAPARECIO DESDE ESE DIA CELINE JAJAJA. Yo con lo flaquito que soy, sigo preguntándome como te quedo bien el pantalón, si te cerro justo, poco mas y se rajaba. Aunque algunos sobren en esa foto (y teníamos fotos solos los dos juntos pero las perdí) ahí estuviste conmigo, uno al lado del otro, porque ya nada nos podía separar esos últimos días, no sabia si íbamos a seguir manteniendo esa unión después de salir, pero aproveche cada momento en el que podíamos hacer cualquier cosa para tener los recuerdos en mi memoria y jamás olvidarlos.
+    </p>
+    <img src="comparacion.png" alt="Comparación divertida" style="width:100%; border-radius:12px; margin:18px 0;">
+    <p>
+      Bueno, supongo que esto lo veras después de haberte dado el regalo, y no se si te diste cuenta aun, pero el cuadro es una interpretación de mi foto favorita juntos (que la hizo mi amigo intimo, ChatGPT jeje), en nuestra licenciatura, de ahi en adelante ya no nos veriamos todos los dias, no nos veriamos esos dias tan helados en los que llevaba el tecito con quix y mas te lo tomabas tu que yo, las veces que jugabamos voleibol y eras demasiado mala pero debia tenerte en mi equipo, no podia enfrentarme contigo porque lo veia casi como un pecado, aunque creo que mas de alguna vez nos enfrentamos (y ganaba yo, obvio), ya no habria conversaciones en la que nos desahogabamos, nos contabamos nuestras cosas y temas mas intimos, y nos entendiamos tan bien que sabiamos que hacer para que el otro estuviera mejor, todo eso, ya no seria lo mismo que antes, pero creeme que la felicidad de haber salido con esa amiga con la que comparti cada dia, no me la quita nadie.
+    </p>
+    <video src="video_1.mp4" loop autoplay muted playsinline style="width:100%; border-radius:12px; margin:18px 0; background:#eee;"></video>
+    <p>
+      Uy, lo bellos que nos veiamos ese dia, pura elegancia. Si te fijas, nos veiamos felices, webiando en esa cosa que giraba, para poder recordar nuestra gala, y toda esa felicidad de la que te hablo demuestra lo vivido en nuestra adolescencia, dos jovenes que tenian muchas metas por cumplir, sueños por alcanzar y logros por presumir. Y ahi me di cuenta que estarias para siempre, por que ya no estabamos con el uniforme del liceo, estabamos disfrutando la ultima actividad como compañeros, y no dudaste en tener ese recuerdo conmigo, y lo volveria a vivir mil veces mas.
+    </p>
+    <img src="imagen_4.jpg" alt="Gala juntos" style="width:100%; border-radius:12px; margin:18px 0;">
+    <p>
+      Y aqui sigues, siendo tan o mucho mas importante como antes, siendo esa amiga incondicional que jamas me dejo solo, que me acompaño en cada paso que he dado, y pienso hacer lo mismo contigo y darte todo lo que mereces como mi mejor amiga, de la cual te apoyare en cada plan o sueño que tengas en mente, ya que nunca he dudado de tus cualidades (puedo presumir de eso con la imagen de arriba, siempre lo he pensado). Creeme que llegaras lejisimos y pienso estar ahi para ser el primero en alegrarme por tus logros, si quieres seguir siendo tatuadora, pon todo de ti para ser la mejor, no aspires a menos que eso, y si las cosas no salen como piensas, tendras todo mi animo para poder salir adelante y proponerte mil cosas mas, que se que serias la mejor en todas. Nunca dejes de soñar y aspirar a tenerlo todo por que se que tarde o temprano, lo lograras.
+    </p>
+    <img src="imagen_5.jpg" alt="Siempre juntos" style="width:100%; border-radius:12px; margin:18px 0;">
+    <p>
+      Fijate que mas que una carta de cumpleaños, es una carta de agracedimiento de mi para ti, gracias por tu amistad, gracias por tu confianza, por tu tiempo, por cada recuerdo contigo, por cada dia que has estado para mi, por tu cariño, por sacarme una sonrisa sin importar como estuviera, y por sobre todas las cosas, gracias por siempre ser tu misma, una persona maravillosa y que todas las personas del mundo merecerian tener en su vida, pero yo tengo la fortuna de decir que eres mi mejor amiga, mi hermana, mi persona de confianza, mi "todo". Espero de corazon, estar para ti siempre que lo necesites, pero siempre, que si un dia sientes que todo se te viene abajo, yo seria el primero en querer verte mejor y feliz, como siempre lo has sido. Tambien deseo lo mejor para ti en todo lo que venga, especialmente ahora que te vas a casar y prometo estar ahi para ti, ahora estando jovenes y hasta cuando estemos viejos, canosos y sin energias, pero con nuestra amistad mas fuerte que nunca y tan especial como siempre.
+    </p>
+    <p style="font-weight:bold; font-size:1.4em; margin-top:28px;">
+      Felices 21, que cumplas muchisimos mas pinche vieja, te quiero un monton.
+    </p>
   </div>
+</div>
 
   <script>
-    function checkPassword() {
-      const claveCorrecta = "1407"; // <-- Cambia la contraseña aquí
-      const input = document.getElementById("password").value;
-      const error = document.getElementById("error-msg");
-
-      if (input === claveCorrecta) {
-        document.getElementById("login-box").style.display = "none";
-        document.getElementById("main-content").style.display = "block";
-      } else {
-        error.style.display = "block";
-      }
-    }
-
     function checkPassword() {
       const claveCorrecta = "1407";
       const input = document.getElementById("password").value;
       const error = document.getElementById("error-msg");
+      const loginBox = document.getElementById("login-box");
+      const mainContent = document.getElementById("main-content");
 
       if (input === claveCorrecta) {
-        document.getElementById("login-box").style.display = "none";
-        
-        // Activa la transición a negro
-        const mainContent = document.getElementById("main-content");
-        mainContent.style.display = "flex";
+        error.style.display = "none";
+        loginBox.classList.add("disappear");
         setTimeout(() => {
           mainContent.classList.add("show");
-          
-          // Muestra mensajes con retraso
-          showConsoleMessage("Hola, señora Celia!", 1000);
-          showConsoleMessage("Cargando sorpresa especial...", 3000);
-          // Agrega más mensajes si quieres
-        }, 100);
+        }, 600);
       } else {
         error.style.display = "block";
       }
     }
-
-    // Función para mostrar mensajes tipo consola
-    function showConsoleMessage(text, delay) {
-      setTimeout(() => {
-        const consoleMessages = document.getElementById("console-messages");
-        const messageElement = document.createElement("div");
-        messageElement.classList.add("console-text");
-        
-        // Efecto de typing (opcional)
-        let i = 0;
-        const typingEffect = setInterval(() => {
-          if (i < text.length) {
-            messageElement.innerHTML = text.substring(0, i + 1) + '<span class="cursor"></span>';
-            i++;
-          } else {
-            clearInterval(typingEffect);
-            messageElement.innerHTML = text; // Remueve el cursor al final
-          }
-        }, 100);
-        
-        consoleMessages.appendChild(messageElement);
-        
-        // Activa la animación de aparición
-        setTimeout(() => {
-          messageElement.classList.add("show");
-        }, 50);
-      }, delay);
-    }
   </script>
-
 </body>
 </html>
