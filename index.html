@@ -69,6 +69,49 @@
         animation: blink 1s infinite;
     }
 
+    #main-content {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      color: #fff;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      font-family: 'Courier New', monospace;
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
+    }
+    
+    #main-content.show {
+      opacity: 1;
+    }
+    
+    .console-text {
+      font-size: 24px;
+      margin: 10px 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    
+    .console-text.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      height: 24px;
+      background-color: #fff;
+      animation: blink 0.7s infinite;
+      vertical-align: middle;
+    }
+
   </style>
 </head>
 <body>
@@ -83,9 +126,10 @@
     <p id="error-msg">Contraseña incorrecta. Inténtalo de nuevo.</p>
   </div>
 
-  <!-- Contenido oculto por ahora -->
   <div id="main-content">
-    <!-- Lo agregaremos después -->
+    <div id="console-messages">
+      <!-- Mensajes que aparecerán secuencialmente -->
+    </div>
   </div>
 
   <script>
@@ -100,6 +144,58 @@
       } else {
         error.style.display = "block";
       }
+    }
+
+    function checkPassword() {
+      const claveCorrecta = "1407";
+      const input = document.getElementById("password").value;
+      const error = document.getElementById("error-msg");
+
+      if (input === claveCorrecta) {
+        document.getElementById("login-box").style.display = "none";
+        
+        // Activa la transición a negro
+        const mainContent = document.getElementById("main-content");
+        mainContent.style.display = "flex";
+        setTimeout(() => {
+          mainContent.classList.add("show");
+          
+          // Muestra mensajes con retraso
+          showConsoleMessage("Hola, señora Celia!", 1000);
+          showConsoleMessage("Cargando sorpresa especial...", 3000);
+          // Agrega más mensajes si quieres
+        }, 100);
+      } else {
+        error.style.display = "block";
+      }
+    }
+
+    // Función para mostrar mensajes tipo consola
+    function showConsoleMessage(text, delay) {
+      setTimeout(() => {
+        const consoleMessages = document.getElementById("console-messages");
+        const messageElement = document.createElement("div");
+        messageElement.classList.add("console-text");
+        
+        // Efecto de typing (opcional)
+        let i = 0;
+        const typingEffect = setInterval(() => {
+          if (i < text.length) {
+            messageElement.innerHTML = text.substring(0, i + 1) + '<span class="cursor"></span>';
+            i++;
+          } else {
+            clearInterval(typingEffect);
+            messageElement.innerHTML = text; // Remueve el cursor al final
+          }
+        }, 100);
+        
+        consoleMessages.appendChild(messageElement);
+        
+        // Activa la animación de aparición
+        setTimeout(() => {
+          messageElement.classList.add("show");
+        }, 50);
+      }, delay);
     }
   </script>
 
